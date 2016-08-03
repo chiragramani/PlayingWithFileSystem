@@ -14,6 +14,14 @@
 		460FBFD71D4CB16C00DA3A3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 460FBFD51D4CB16C00DA3A3F /* LaunchScreen.storyboard */; };
 		460FBFE21D4CB16C00DA3A3F /* PlayingWithFileSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460FBFE11D4CB16C00DA3A3F /* PlayingWithFileSystemTests.swift */; };
 		460FBFED1D4CB16C00DA3A3F /* PlayingWithFileSystemUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460FBFEC1D4CB16C00DA3A3F /* PlayingWithFileSystemUITests.swift */; };
+		460FBFFB1D4DF53100DA3A3F /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460FBFFA1D4DF53100DA3A3F /* FileViewController.swift */; };
+		466A3B031D4FA0E100C60EF6 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466A3B021D4FA0E100C60EF6 /* CoreDataStack.swift */; };
+		466A3B071D4FFCCE00C60EF6 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466A3B061D4FFCCE00C60EF6 /* CustomTableViewCell.swift */; };
+		466A3B0B1D50132F00C60EF6 /* File+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466A3B091D50132F00C60EF6 /* File+CoreDataProperties.swift */; };
+		466A3B0C1D50132F00C60EF6 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466A3B0A1D50132F00C60EF6 /* File.swift */; };
+		466A3B0E1D51FF7B00C60EF6 /* newFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466A3B0D1D51FF7B00C60EF6 /* newFileViewController.swift */; };
+		46FB792A1D4E7BDE00AD21EF /* DocumentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB79291D4E7BDE00AD21EF /* DocumentsViewController.swift */; };
+		46FB792D1D4E8F5C00AD21EF /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46FB792B1D4E8F5C00AD21EF /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +55,15 @@
 		460FBFE81D4CB16C00DA3A3F /* PlayingWithFileSystemUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayingWithFileSystemUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		460FBFEC1D4CB16C00DA3A3F /* PlayingWithFileSystemUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingWithFileSystemUITests.swift; sourceTree = "<group>"; };
 		460FBFEE1D4CB16C00DA3A3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		460FBFFA1D4DF53100DA3A3F /* FileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewController.swift; sourceTree = "<group>"; };
+		466A3B021D4FA0E100C60EF6 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		466A3B061D4FFCCE00C60EF6 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		466A3B081D50124200C60EF6 /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
+		466A3B091D50132F00C60EF6 /* File+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		466A3B0A1D50132F00C60EF6 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		466A3B0D1D51FF7B00C60EF6 /* newFileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = newFileViewController.swift; sourceTree = "<group>"; };
+		46FB79291D4E7BDE00AD21EF /* DocumentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentsViewController.swift; sourceTree = "<group>"; };
+		46FB792C1D4E8F5C00AD21EF /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +94,10 @@
 		460FBFC01D4CB16B00DA3A3F = {
 			isa = PBXGroup;
 			children = (
+				466A3B091D50132F00C60EF6 /* File+CoreDataProperties.swift */,
+				466A3B0A1D50132F00C60EF6 /* File.swift */,
+				466A3B061D4FFCCE00C60EF6 /* CustomTableViewCell.swift */,
+				466A3B021D4FA0E100C60EF6 /* CoreDataStack.swift */,
 				460FBFCB1D4CB16B00DA3A3F /* PlayingWithFileSystem */,
 				460FBFE01D4CB16C00DA3A3F /* PlayingWithFileSystemTests */,
 				460FBFEB1D4CB16C00DA3A3F /* PlayingWithFileSystemUITests */,
@@ -103,6 +124,10 @@
 				460FBFD31D4CB16C00DA3A3F /* Assets.xcassets */,
 				460FBFD51D4CB16C00DA3A3F /* LaunchScreen.storyboard */,
 				460FBFD81D4CB16C00DA3A3F /* Info.plist */,
+				460FBFFA1D4DF53100DA3A3F /* FileViewController.swift */,
+				46FB79291D4E7BDE00AD21EF /* DocumentsViewController.swift */,
+				46FB792B1D4E8F5C00AD21EF /* Model.xcdatamodeld */,
+				466A3B0D1D51FF7B00C60EF6 /* newFileViewController.swift */,
 			);
 			path = PlayingWithFileSystem;
 			sourceTree = "<group>";
@@ -256,8 +281,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				466A3B071D4FFCCE00C60EF6 /* CustomTableViewCell.swift in Sources */,
+				460FBFFB1D4DF53100DA3A3F /* FileViewController.swift in Sources */,
+				46FB792A1D4E7BDE00AD21EF /* DocumentsViewController.swift in Sources */,
+				466A3B0B1D50132F00C60EF6 /* File+CoreDataProperties.swift in Sources */,
+				46FB792D1D4E8F5C00AD21EF /* Model.xcdatamodeld in Sources */,
 				460FBFCF1D4CB16C00DA3A3F /* ViewController.swift in Sources */,
 				460FBFCD1D4CB16C00DA3A3F /* AppDelegate.swift in Sources */,
+				466A3B0E1D51FF7B00C60EF6 /* newFileViewController.swift in Sources */,
+				466A3B0C1D50132F00C60EF6 /* File.swift in Sources */,
+				466A3B031D4FA0E100C60EF6 /* CoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +517,7 @@
 				460FBFF31D4CB16C00DA3A3F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		460FBFF41D4CB16C00DA3A3F /* Build configuration list for PBXNativeTarget "PlayingWithFileSystemTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +526,7 @@
 				460FBFF61D4CB16C00DA3A3F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		460FBFF71D4CB16C00DA3A3F /* Build configuration list for PBXNativeTarget "PlayingWithFileSystemUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,8 +535,23 @@
 				460FBFF91D4CB16C00DA3A3F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		46FB792B1D4E8F5C00AD21EF /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				466A3B081D50124200C60EF6 /* Model 2.xcdatamodel */,
+				46FB792C1D4E8F5C00AD21EF /* Model.xcdatamodel */,
+			);
+			currentVersion = 466A3B081D50124200C60EF6 /* Model 2.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 460FBFC11D4CB16B00DA3A3F /* Project object */;
 }
