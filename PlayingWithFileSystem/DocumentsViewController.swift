@@ -53,6 +53,7 @@ class DocumentsViewController: UIViewController,UITableViewDelegate,UITableViewD
         let cell = tableView.dequeueReusableCellWithIdentifier("CellId") as! CustomTableViewCell
         let file=fetchedResultsController.objectAtIndexPath(indexPath) as! File
         cell.fileNameLabel.text=file.fileName
+        cell.fileNameLabel.numberOfLines=0
         
         let formatter = NSByteCountFormatter()
         formatter.allowsNonnumericFormatting = false
@@ -71,6 +72,7 @@ class DocumentsViewController: UIViewController,UITableViewDelegate,UITableViewD
             break
         default : break
         }
+        cell.layoutSubviews()
         return cell
     }
     

@@ -11,6 +11,7 @@ import UIKit
 class newFileViewController: UIViewController,UITextViewDelegate {
     
     
+    @IBOutlet var fileSizeLabel: UILabel!
     
     @IBOutlet var fileContents: UITextView!
     
@@ -75,5 +76,16 @@ class newFileViewController: UIViewController,UITextViewDelegate {
             textView.text=""
         }
         return true
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        let fileData=self.fileContents.text.dataUsingEncoding(NSUTF8StringEncoding)
+        let fileSize=(fileData?.length)! as NSNumber
+        
+        let formatter = NSByteCountFormatter()
+        formatter.allowsNonnumericFormatting = false
+        formatter.countStyle=NSByteCountFormatterCountStyle.Memory
+        let bytes=fileSize.longLongValue
+        self.fileSizeLabel.text=formatter.stringFromByteCount(bytes)
     }
 }
