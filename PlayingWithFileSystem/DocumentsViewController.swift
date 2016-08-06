@@ -188,7 +188,7 @@ class DocumentsViewController: UIViewController,UITableViewDelegate,UITableViewD
     @IBAction func moreBarItemPressed(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: nil , message: nil, preferredStyle: .ActionSheet)
         
-        let createNonDLPFileAction=UIAlertAction(title: "Create Non-DLP File", style: .Default)
+        let createNonDLPFileAction=UIAlertAction(title: "Create Custom-DLP File", style: .Default)
         { (UIAlertAction) in
             let newFileVC=self.storyboard?.instantiateViewControllerWithIdentifier("newFileVC") as! newFileViewController
             self.navigationController?.pushViewController(newFileVC, animated: true)
@@ -196,7 +196,16 @@ class DocumentsViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
         let createDLPFileAction=UIAlertAction(title: "Create DLP File", style: .Default)
         { (UIAlertAction) in
-                                
+            
+            let alertController = UIAlertController(title: "Select DLP Type" , message: nil, preferredStyle: .Alert)
+            let pciAction=UIKit.UIAlertAction(title: "PCI", style: .Default, handler: nil)
+            let phiAction=UIKit.UIAlertAction(title: "PHI", style: .Default, handler: nil)
+            let piiAction=UIKit.UIAlertAction(title: "PII", style: .Default, handler: nil)
+            alertController.addAction(pciAction)
+            alertController.addAction(phiAction)
+            alertController.addAction(piiAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
             }
         
         

@@ -74,7 +74,7 @@ class FileViewController: UIViewController,UIWebViewDelegate {
         }
         if let mime=mimeType
         {
-        webView.loadData((file?.fileData)!, MIMEType: mime, textEncodingName: "UTF-8", baseURL: NSURL())
+            webView.loadData((file?.fileData)!, MIMEType: mime, textEncodingName: "UTF-8", baseURL: NSURL())
         }
         else
         {
