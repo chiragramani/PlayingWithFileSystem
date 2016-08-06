@@ -74,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let lastPathComponent=url.lastPathComponent
         let urlComponents = lastPathComponent?.componentsSeparatedByString(".")
         let fileData=NSData(contentsOfURL: url)
+    
         let fileSize=(fileData?.length)! as NSNumber
         print(urlComponents)
         

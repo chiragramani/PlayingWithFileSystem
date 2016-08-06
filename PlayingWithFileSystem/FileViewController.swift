@@ -8,18 +8,23 @@
 
 import UIKit
 
-class FileViewController: UIViewController {
+class FileViewController: UIViewController,UIWebViewDelegate {
     
     var file:File?
     var fileUTI:String?
+    
+    @IBOutlet var activityView: UIActivityIndicatorView!
+    
     lazy private var documentInteractionController = UIDocumentInteractionController()
     @IBOutlet weak var webView: UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController?.tabBar.hidden=true
+        activityView.hidden=false
+        activityView.startAnimating()
         loadWebView()
+        webView.delegate=self
+        self.tabBarController?.tabBar.hidden=true
         self.navigationItem.rightBarButtonItem=UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(FileViewController.shareFile))
-
     }
     
     func loadWebView()
@@ -104,5 +109,8 @@ class FileViewController: UIViewController {
         }
     }
     
-    
+    func webViewDidFinishLoad(webView: UIWebView) {
+       activityView.stopAnimating()
+        activityView.hidden=true
+    }
 }

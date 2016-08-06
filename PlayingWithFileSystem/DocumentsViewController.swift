@@ -57,6 +57,7 @@ class DocumentsViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         let formatter = NSByteCountFormatter()
         formatter.allowsNonnumericFormatting = false
+        formatter.includesActualByteCount=true
         let bytes=file.fileSize?.longLongValue
         
         cell.fileSizeLabel.text=formatter.stringFromByteCount(bytes!)
@@ -193,7 +194,14 @@ class DocumentsViewController: UIViewController,UITableViewDelegate,UITableViewD
             self.navigationController?.pushViewController(newFileVC, animated: true)
             
         }
-        let createDLPFileAction=UIAlertAction(title: "Create DLP File", style: .Default, handler: nil)
+        let createDLPFileAction=UIAlertAction(title: "Create DLP File", style: .Default)
+        { (UIAlertAction) in
+                                
+            }
+        
+        
+        
+        
         let sortFileAction=UIAlertAction(title: "Sort Files By...", style: .Default){ (UIAlertAction) in
             
             let alertController = UIAlertController(title: "Sort Files By..." , message: nil, preferredStyle: .ActionSheet)
