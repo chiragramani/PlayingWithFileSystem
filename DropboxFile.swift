@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  DropboxFile.swift
 //  PlayingWithFileSystem
 //
 //  Created by Chirag Ramani on 07/08/16.
@@ -10,21 +10,19 @@ import Foundation
 import CoreData
 
 
-class File: NSManagedObject {
+class DropboxFile: NSManagedObject {
 
-    convenience init (fileCategory:String?,fileName:String,fileSize:NSNumber,fileType:String,fileData:NSData,context:NSManagedObjectContext)
+    convenience init (filePath:String,fileId:String,fileName:String,fileSize:NSNumber,fileType:String,context:NSManagedObjectContext)
     {
-        if let entity=NSEntityDescription.entityForName("File", inManagedObjectContext: context)
+        if let entity=NSEntityDescription.entityForName("DropboxFile", inManagedObjectContext: context)
         {
             self.init(entity: entity,insertIntoManagedObjectContext: context)
             self.fileName=fileName
+            self.fileId=fileId
             self.fileSize=fileSize
             self.fileType=fileType
-            self.fileData=fileData
-            if let fileCat = fileCategory
-            {
-                self.fileCategory=fileCat
-            }
+            self.path=filePath
+            
         }
         else
         {

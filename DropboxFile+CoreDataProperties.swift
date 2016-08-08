@@ -1,5 +1,5 @@
 //
-//  File+CoreDataProperties.swift
+//  DropboxFile+CoreDataProperties.swift
 //  PlayingWithFileSystem
 //
 //  Created by Chirag Ramani on 07/08/16.
@@ -12,12 +12,13 @@
 import Foundation
 import CoreData
 
-extension File {
+extension DropboxFile {
 
-    @NSManaged var fileCategory: String?
     @NSManaged var fileData: NSData?
+    @NSManaged var fileId: String?
     @NSManaged var fileName: String?
     @NSManaged var fileSize: NSNumber?
     @NSManaged var fileType: String?
+    @NSManaged var path: String?
 
 }

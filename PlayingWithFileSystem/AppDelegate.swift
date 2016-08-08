@@ -15,6 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let stack = CoreDataStack(modelName: "Model")!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+       let access_token = NSUserDefaults.standardUserDefaults().objectForKey("access_token")
+       if let accesstoken=access_token as? String
+       {
+        DropboxClient.sharedInstance.access_token = accesstoken
+        }
+        else
+       {
+        DropboxClient.sharedInstance.access_token=nil
+        }
         return true
     }
     

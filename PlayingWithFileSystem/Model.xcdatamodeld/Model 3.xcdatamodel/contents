@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Xcode 7.0">
-    <entity name="DropboxFile" syncable="YES">
-        <attribute name="fileId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fileSize" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="DropboxFile" representedClassName=".DropboxFile" syncable="YES">
+        <attribute name="fileData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="fileId" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="fileName" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="fileSize" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="fileType" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="path" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="File" representedClassName=".File" syncable="YES">
         <attribute name="fileCategory" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -15,6 +17,6 @@
     </entity>
     <elements>
         <element name="File" positionX="-63" positionY="-18" width="128" height="120"/>
-        <element name="DropboxFile" positionX="-63" positionY="18" width="128" height="105"/>
+        <element name="DropboxFile" positionX="-54" positionY="27" width="128" height="135"/>
     </elements>
 </model>

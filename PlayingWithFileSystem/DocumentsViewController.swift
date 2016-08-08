@@ -13,9 +13,6 @@ class DocumentsViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     
-    var sortingDescriptor = "fileName"
-    
-    
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let stack = delegate.stack
@@ -268,5 +265,12 @@ class DocumentsViewController: UIViewController,UITableViewDelegate,UITableViewD
         alertController.addAction(createNonDLPFileAction)
         alertController.addAction(sortFileAction)
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    deinit
+    {
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: "openURL", object: nil)
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: "fileAlreadyExists", object: nil)
+
     }
 }
