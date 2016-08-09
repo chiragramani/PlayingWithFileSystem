@@ -13,7 +13,8 @@ class Custom1TableViewCell: UITableViewCell {
     
     
     
-    @IBOutlet var activityView: UIActivityIndicatorView!
+    @IBOutlet var downloadLabel: UILabel!
+   
     @IBOutlet var fileNameLabel: UILabel!
     @IBOutlet var myImageView: UIImageView!
     

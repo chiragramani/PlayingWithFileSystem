@@ -22,7 +22,7 @@ final class DropboxClient: NSObject
         super.init()
     }
     
-    final func taskForPOSTMethod(parse:Bool,api:String,method:String,headers:[String:AnyObject]?,jsonBody:String?,completionHandlerForPOST: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask
+    final func taskForPOSTMethod(parse:Bool,api:String,method:String,headers:[String:AnyObject]?,jsonBody:AnyObject?,completionHandlerForPOST: (result: AnyObject!, error: String?) -> Void) -> NSURLSessionDataTask
     {
        
     
@@ -36,23 +36,28 @@ final class DropboxClient: NSObject
         }
         
         request.addValue("Bearer \(DropboxClient.sharedInstance.access_token!)", forHTTPHeaderField: "Authorization")
-         
+        
        
-        if let jsonBody = jsonBody
+        if let jsonBody = jsonBody as? String
         {
             request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
         }
         
+        if let requestBody = jsonBody as? NSData
+        {
+            request.HTTPBody = requestBody
+        }
+        
+        
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
             
             func sendError(error: String) {
-                print("\(error)\n")
-                let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForPOST(result: nil, error: NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+               
+                completionHandlerForPOST(result: nil, error: error)
                 
             }
             
-            print((response as? NSHTTPURLResponse)?.statusCode)
+            print((response as? NSHTTPURLResponse)?.allHeaderFields)
             
             // GUARD: Was there an error?
            guard (error == nil) else {
@@ -62,7 +67,7 @@ final class DropboxClient: NSObject
                 }
                 else
                 {
-                    sendError("There was an error with your request: \(error)")
+                    sendError("There was an error with your request: ")
                 }
                 return
             }
@@ -113,68 +118,15 @@ final class DropboxClient: NSObject
     
     
     }
-    
-  /*  func taskForGETMethod(parameters: [String:AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
-        
-        let request = NSMutableURLRequest(URL: URLFromParameters(api, parameters: nil, withPathExtension: method))
-        
-        
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
-            
-            func sendError(error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForGET(result: nil, error: NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
-            }
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                if(error!.code==(-1009))
-                {
-                    sendError("The Internet connection appears to be offline")
-                }
-                else
-                {
-                    sendError("There was an error with your request: \(error)")
-                }
-                return
-            }
-            
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
-            convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
-        }
-        
-        /* 7. Start the request */
-        task.resume()
-        
-        return task
-    }
-    */
-    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
+
+    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: String?) -> Void) {
         
         var parsedResult: AnyObject!
         do {
             parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                   } catch {
            
-            
-        } catch {
-            print("canot parse data")
-            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+            completionHandlerForConvertData(result: nil, error: "Error fetching data from server")
         }
         
         completionHandlerForConvertData(result: parsedResult, error: nil)
@@ -201,6 +153,7 @@ private func URLFromParameters(api:String,parameters: [String:AnyObject]?, withP
         
         return components.URL!
     }
+
 
 
 

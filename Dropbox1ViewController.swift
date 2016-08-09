@@ -19,17 +19,19 @@ class Dropbox1ViewController: UIViewController,UITableViewDelegate,UITableViewDa
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        activityView.hidden=true
+        configureActivityView(true)
         tableView.delegate=self
         tableView.dataSource=self
         configureAuthenticateButton()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Dropbox1ViewController.userAuthenticated), name: "userAuthenticated", object: nil)
         performFetch()
+        self.navigationItem.rightBarButtonItem=UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(Dropbox1ViewController.rightBarButtonItem))
     }
     
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+        self.tabBarController?.tabBar.hidden=false
         configureUI()
     }
     
@@ -39,6 +41,7 @@ class Dropbox1ViewController: UIViewController,UITableViewDelegate,UITableViewDa
         tableView.hidden = (access_token==nil) ? true : false
         authenticateButton.hidden = (access_token==nil) ? false : true
         dropboxLogo.alpha = (access_token==nil) ? CGFloat(1.0) : CGFloat(0.5)
+        self.navigationItem.rightBarButtonItem?.enabled = (access_token==nil) ? false  : true
         if (access_token != nil)
         {
             performFetch()
@@ -54,8 +57,6 @@ class Dropbox1ViewController: UIViewController,UITableViewDelegate,UITableViewDa
         fetchedResultsController.delegate = self
         return fetchedResultsController
     }()
-    
-    
     
     @IBAction func authenticateButtonPressed(sender: AnyObject) {
         
@@ -74,25 +75,26 @@ class Dropbox1ViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if let sections = fetchedResultsController.sections {
             return sections.count
         }
-        
         return 0
     }
     
-    
-    
+    func formatBytes(bytes:NSNumber)->String
+    {
+        let formatter = NSByteCountFormatter()
+        formatter.allowsNonnumericFormatting = false
+        formatter.includesActualByteCount=true
+        let bytesLongValue=bytes.longLongValue
+        return formatter.stringFromByteCount(bytesLongValue)
+    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell=tableView.dequeueReusableCellWithIdentifier("CellId") as! Custom1TableViewCell
         let dropboxFile=fetchedResultsController.objectAtIndexPath(indexPath) as! DropboxFile
-        
+        cell.downloadLabel.hidden=true
         cell.fileNameLabel.text=dropboxFile.fileName
-        let formatter = NSByteCountFormatter()
         cell.fileNameLabel.numberOfLines=0
-        formatter.allowsNonnumericFormatting = false
-        formatter.includesActualByteCount=true
-        let bytes=dropboxFile.fileSize?.longLongValue
-        
-        cell.fileSizeLabel.text=formatter.stringFromByteCount(bytes!)
+        cell.fileSizeLabel.text=formatBytes(dropboxFile.fileSize!)
+        cell.accessoryType=UITableViewCellAccessoryType.DetailDisclosureButton
         switch(dropboxFile.fileType!)
         {
         case "doc","docx" : cell.myImageView.image=UIImage(named: "word")
@@ -105,13 +107,15 @@ class Dropbox1ViewController: UIViewController,UITableViewDelegate,UITableViewDa
             break
         case "jpg" : cell.myImageView.image=UIImage(named: "jpg")
             break
+        case "png" : cell.myImageView.image=UIImage(named: "png")
+            break
+        case "jpeg" : cell.myImageView.image=UIImage(named: "jpeg")
+            break
             
-        default : break
+        default : cell.myImageView.image=UIImage(named: "unknown")
+            break
         }
         cell.layoutSubviews()
-        //cell.fileNameLabel.text=dropboxFile.fileName
-        //cell.fileSizeLabel.text=String(dropboxFile.fileSize)
-        
         return cell
     }
     
@@ -149,14 +153,7 @@ class Dropbox1ViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 tableView.cellForRowAtIndexPath(indexPath)
             }
             break;
-        case .Move:
-            if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            }
-            
-            if let newIndexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
-            }
+        default:
             break;
         }
     }
@@ -183,13 +180,13 @@ class Dropbox1ViewController: UIViewController,UITableViewDelegate,UITableViewDa
         activityView.startAnimating()
         DropboxClient.sharedInstance.fetchFolderContents { (success, errorString) in
             
-            if(success)
+            dispatch_async(dispatch_get_main_queue())
             {
-                dispatch_async(dispatch_get_main_queue())
+                if(success)
                 {
                     self.tableView.reloadData()
-                    self.activityView.stopAnimating()
-                    self.activityView.hidden=true
+                    self.configureActivityView(true)
+                    
                     let delegate=UIApplication.sharedApplication().delegate as! AppDelegate
                     let stack=delegate.stack
                     do
@@ -198,63 +195,123 @@ class Dropbox1ViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     {
                         print("Error saving context")
                     }
+                }
+                else
+                {
+                    self.configureActivityView(true)
+                    let alertController=UIAlertController(title: "Error", message: errorString!, preferredStyle: .Alert)
+                    let dismissAction=UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+                    alertController.addAction(dismissAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
                 }}
-            else
-            {
-                self.activityView.stopAnimating()
-                self.activityView.hidden=true
-                print(errorString)
-            }
         }
     }
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let cell=tableView.cellForRowAtIndexPath(indexPath) as! Custom1TableViewCell
-        cell.activityView.startAnimating()
-        cell.activityView.hidden=false
-        let dropboxFile = fetchedResultsController.objectAtIndexPath(indexPath) as! DropboxFile
-        if dropboxFile.fileData == nil
+        
+    }
+    func configureActivityView(bool:Bool)
+    {
+        self.activityView.hidden = bool ? true : false
+        if(bool)
         {
-            DropboxClient.sharedInstance.downloadFile(dropboxFile) { (success, errorString) in
-                if(success)
-                {
-                    dispatch_async(dispatch_get_main_queue())
-                    {
-                    cell.activityView.stopAnimating()
-                    cell.activityView.hidden=true
-                    let alertController = UIAlertController(title: "File Downloaded", message: "\(dropboxFile.fileName!) downloaded successfully", preferredStyle: .Alert)
-                    let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
-                        alertController.addAction(dismissAction)
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                       
-                    
-                    }
-                }
-                else
-                {
-                    dispatch_async(dispatch_get_main_queue())
-                    {
-                        cell.activityView.stopAnimating()
-                        cell.activityView.hidden=true
-                        let alertController = UIAlertController(title: "Error Downloading File", message: "\(dropboxFile.fileName!) download failed..Try Again", preferredStyle: .Alert)
-                        let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
-                         alertController.addAction(dismissAction)
-                        self.presentViewController(alertController, animated: true, completion: nil)
-                        
-                    }
-                }
-            }
+            self.activityView.stopAnimating()
         }
         else
         {
-            cell.activityView.stopAnimating()
-            cell.activityView.hidden=true
-        print("Already download")//NSdata already present
+            self.activityView.startAnimating()
         }
+    }
+    
+    func rightBarButtonItem()
+    {
+        let alertController=UIAlertController(title: "Dropbox", message: nil, preferredStyle: .ActionSheet)
+        let refreshAction=UIAlertAction(title: "Refresh", style: .Default) { (UIAlertAction) in
+            self.listFolderContents()
+        }
+        let logoutFromDropbox=UIAlertAction(title: "Logout from Dropbox", style: .Default) { (UIAlertAction) in
+            DropboxClient.sharedInstance.access_token=nil
+            DropboxClient.sharedInstance.account_id=nil
+            DropboxClient.sharedInstance.uid=nil
+            self.configureUI()
+            
+        }
+        let cancelAction=UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alertController.addAction(refreshAction)
+        alertController.addAction(logoutFromDropbox)
+        alertController.addAction(cancelAction)
+        presentViewController(alertController, animated: true, completion: nil)
         
     }
+    
+    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        let dropboxFile=fetchedResultsController.objectAtIndexPath(indexPath) as! DropboxFile
+        let cell=tableView.cellForRowAtIndexPath(indexPath) as! Custom1TableViewCell
+        let alertController=UIAlertController(title: "\(dropboxFile.fileName!)", message: nil, preferredStyle: .ActionSheet)
+        let downloadFileAction=UIAlertAction(title: "Download File", style: .Default) { (UIAlertAction) in
+            
+            cell.downloadLabel.hidden=false
+            let dropboxFile = self.fetchedResultsController.objectAtIndexPath(indexPath) as! DropboxFile
+            if dropboxFile.fileData == nil
+            {
+                DropboxClient.sharedInstance.downloadFile(dropboxFile) { (success, errorString) in
+                    
+                    dispatch_async(dispatch_get_main_queue()){
+                        if(success)
+                        {
+                            dispatch_async(dispatch_get_main_queue())
+                            {
+                                cell.downloadLabel.hidden=true
+                                let alertController = UIAlertController(title: "File Downloaded", message: "\(dropboxFile.fileName!) downloaded successfully", preferredStyle: .Alert)
+                                let dismissAction = UIKit.UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+                                alertController.addAction(dismissAction)
+                                self.presentViewController(alertController, animated: true, completion: nil)
+                            }
+                        }
+                        else
+                        {
+                            cell.downloadLabel.hidden=true
+                            
+                            let alertController = UIAlertController(title: "Error Downloading \(dropboxFile.fileName!)", message: errorString!, preferredStyle: .Alert)
+                            let dismissAction = UIKit.UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+                            alertController.addAction(dismissAction)
+                            self.presentViewController(alertController, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+            else
+            {
+                cell.downloadLabel.hidden=true
+                let alertController = UIAlertController(title: "File Already Present", message: "\(dropboxFile.fileName!) already present", preferredStyle: .Alert)
+                let dismissAction = UIKit.UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+                alertController.addAction(dismissAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            }
+        }
+        let previewFileAction=UIAlertAction(title: "Preview Document", style: .Default)
+        { (UIAlertAction) in
+            let fileVC=self.storyboard?.instantiateViewControllerWithIdentifier("fileViewController") as! FileViewController
+            fileVC.dropboxFile=dropboxFile
+            self.navigationController?.pushViewController(fileVC, animated: true)
+        }
+        
+        
+        let dismissAction=UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alertController.addAction(downloadFileAction)
+        alertController.addAction(previewFileAction)
+        alertController.addAction(dismissAction)
+        alertController.actions[1].enabled = dropboxFile.fileData==nil ? false : true
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+        
+        
+    }
+    
 }
 
 

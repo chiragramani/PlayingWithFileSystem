@@ -26,8 +26,8 @@ extension DropboxClient
             
             if let error=error
             {
-                print(error)
-                completionHandler(success: false,errorString: error.localizedDescription)
+                
+                completionHandler(success: false,errorString: error)
             }
             else
             {
@@ -45,28 +45,8 @@ extension DropboxClient
                 }
                 let delegate=UIApplication.sharedApplication().delegate as! AppDelegate
                 let stack=delegate.stack
-                
-                
-                /*    dispatch_async(dispatch_get_main_queue())
-                 {
-                 let fetchRequest = NSFetchRequest(entityName: "DropboxFile")
-                 fetchRequest.sortDescriptors=[NSSortDescriptor(key: "fileName", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))
-                 ]
-                 let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-                 do {
-                 try stack.context.persistentStoreCoordinator?.executeRequest(deleteRequest, withContext: stack.context)
-                 } catch let error as NSError {
-                 print(error)
-                 }
-                 do
-                 {       try stack.saveContext()
-                 }catch
-                 {
-                 print("Error saving context")
-                 }
-                 
-                 }
-                 */
+            dispatch_async(dispatch_get_main_queue())
+            {
                 var coreDataEntries:[DropboxFile]?
                 let fetchRequest=NSFetchRequest(entityName: "DropboxFile")
                 
@@ -115,7 +95,7 @@ extension DropboxClient
                         DropboxFile(filePath: filePath, fileId: fileId, fileName: fileName, fileSize: fileSize, fileType: fileType[fileType.count-1], context: stack.context)
                     }
                     
-                }
+                }}
                 completionHandler(success: true, errorString: nil)
                 
                 
@@ -154,8 +134,60 @@ extension DropboxClient
         else
             {
         
-        completionHandler(success: false  , errorString: error?.localizedDescription)
+        completionHandler(success: false  , errorString: error)
         }
+            
+            
+        }
+    }
+    
+    func uploadFile(file:File,completionHandler:(success: Bool, errorString: String?) -> Void)
+    {
+        var headers=[String:AnyObject]()
+        let method = DropboxClient.Methods.FileUpload
+        let api=DropboxClient.Constants.APIHost1
+        let headerValue="{\"\(DropboxClient.JSONRequestKeys.Path)\": \"/\(file.fileName!)\",\"\(DropboxClient.JSONRequestKeys.Autorename)\":\(DropboxClient.JSONResponseKeys.Autorename),\"\(DropboxClient.JSONRequestKeys.Mode)\":{\"\(DropboxClient.JSONRequestKeys.Tag)\":\"\(DropboxClient.JSONResponseKeys.Overwrite)\"}}"
+        headers["Content-Type"] = "application/octet-stream"
+        headers["Dropbox-API-Arg"]=headerValue
+        print(headerValue)
+        let delegate=UIApplication.sharedApplication().delegate as! AppDelegate
+        let stack=delegate.stack
+        DropboxClient.sharedInstance.taskForPOSTMethod(true, api: api, method: method, headers: headers, jsonBody: file.fileData!)
+        { (result, error) in
+            if error == nil
+            {
+                guard let results = result as? [String:AnyObject] else
+             {
+              completionHandler(success: false, errorString: "Invalid response")
+                return
+                }
+                guard let filePath=results[DropboxClient.JSONResponseKeys.Path] as? String else
+                {
+                    completionHandler(success: false, errorString: "Invalid response")
+                    return
+                }
+                guard let fileId=results[DropboxClient.JSONResponseKeys.Id] as? String else
+                {
+                    completionHandler(success: false, errorString: "Invalid response")
+                    return
+                }
+                guard let fileName=results[DropboxClient.JSONResponseKeys.Name] as? String else
+                {
+                    completionHandler(success: false, errorString: "Invalid response")
+                    return
+                }
+                
+           dispatch_async(dispatch_get_main_queue())
+           {
+            DropboxFile(filePath: filePath, fileId: fileId, fileName: fileName, fileSize: file.fileSize!, fileType: file.fileType!, context: stack.context)
+                }
+             completionHandler(success: true, errorString: nil)
+              
+            }
+            else
+            {
+                completionHandler(success: false, errorString: error)
+            }
             
             
         }

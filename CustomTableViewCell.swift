@@ -11,6 +11,7 @@ import UIKit
 class CustomTableViewCell: UITableViewCell {
 
     
+    @IBOutlet var uploadLabel: UILabel!
     @IBOutlet var fileSizeLabel: UILabel!
     @IBOutlet var fileNameLabel: UILabel!
     @IBOutlet var myImageView: UIImageView!

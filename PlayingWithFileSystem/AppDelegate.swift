@@ -28,11 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func applicationWillResignActive(application: UIApplication) {
-       
-    }
-    
-    func applicationDidEnterBackground(application: UIApplication) {
+        func applicationDidEnterBackground(application: UIApplication) {
         do
         {       try stack.saveContext()
         }catch
@@ -41,19 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-    
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-    
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-    
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+       func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         
         let documentsDirectoryPath=NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
         print(documentsDirectoryPath)
@@ -70,8 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             {
                 NSNotificationCenter.defaultCenter().postNotificationName("fileAlreadyExists", object: application, userInfo: nil)
             }
-            //print("\(fetchError), \(fetchError.userInfo)")
-            return false
+                       return false
         }
         urlInfo["fileName"]=String(url.lastPathComponent!)
         saveFile(destinationPath)
@@ -79,8 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     func saveFile(url:NSURL)->Void
-    {
-        
+    {   
         let lastPathComponent=url.lastPathComponent
         let urlComponents = lastPathComponent?.componentsSeparatedByString(".")
         let fileData=NSData(contentsOfURL: url)
@@ -97,10 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         {
             print("Error saving context")
         }
-        
-        
     }
-    
 }
 
 

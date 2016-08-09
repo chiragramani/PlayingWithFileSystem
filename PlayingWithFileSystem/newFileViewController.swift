@@ -24,8 +24,6 @@ class newFileViewController: UIViewController,UITextViewDelegate,UIGestureRecogn
         let saveButton=UIBarButtonItem(title: "Save", style: .Plain, target: self, action: #selector(newFileViewController.saveFile))
         let scaleButton=UIBarButtonItem(title: "Scale", style: .Plain, target: self, action: #selector(newFileViewController.scaleToBytes))
         self.navigationItem.rightBarButtonItems=[saveButton,scaleButton]
-        
-        
         let tapTerm = UITapGestureRecognizer(target: self, action: #selector(newFileViewController.tapTextView))
         tapTerm.numberOfTapsRequired=2
         tapTerm.delegate = self
@@ -137,9 +135,6 @@ class newFileViewController: UIViewController,UITextViewDelegate,UIGestureRecogn
                     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)){
                     self.scaleData(fileData!, scaleSize: Int(enteredFileSize)!)
                     }
-                
-                    
-                    
                 }
             }
             
@@ -199,8 +194,6 @@ class newFileViewController: UIViewController,UITextViewDelegate,UIGestureRecogn
     
     func scaleData( dataString:NSData,scaleSize:Int)
     {
-        
-        
         let resultData=NSMutableData(data: dataString)
         while(resultData.length < scaleSize-resultData.length)
         {
@@ -220,7 +213,7 @@ class newFileViewController: UIViewController,UITextViewDelegate,UIGestureRecogn
             let stack=delegate.stack
             let stringData = NSString(data: dataString, encoding: NSUTF8StringEncoding)
             fileName=((stringData?.length)!>10 ? stringData?.substringToIndex(10) :  stringData)!
-            File(fileCategory: nil, fileName: fileName as String, fileSize: resultData.length, fileType: "txt", fileData: resultData, context: stack.context)
+            File(fileCategory: nil, fileName: "\(fileName).txt" as String, fileSize: resultData.length, fileType: "txt", fileData: resultData, context: stack.context)
             var urlInfo=[NSObject:AnyObject]()
             urlInfo["fileName"] = fileName
             do
@@ -232,9 +225,5 @@ class newFileViewController: UIViewController,UITextViewDelegate,UIGestureRecogn
             self.navigationController?.popViewControllerAnimated(true)
             NSNotificationCenter.defaultCenter().postNotificationName("openURL", object: nil, userInfo: urlInfo)
             }
-    
         }
-    
-    
-   
 }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		460FBFCD1D4CB16C00DA3A3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460FBFCC1D4CB16C00DA3A3F /* AppDelegate.swift */; };
-		460FBFCF1D4CB16C00DA3A3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460FBFCE1D4CB16C00DA3A3F /* ViewController.swift */; };
 		460FBFD21D4CB16C00DA3A3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 460FBFD01D4CB16C00DA3A3F /* Main.storyboard */; };
 		460FBFD41D4CB16C00DA3A3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460FBFD31D4CB16C00DA3A3F /* Assets.xcassets */; };
 		460FBFD71D4CB16C00DA3A3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 460FBFD51D4CB16C00DA3A3F /* LaunchScreen.storyboard */; };
@@ -52,7 +51,6 @@
 /* Begin PBXFileReference section */
 		460FBFC91D4CB16B00DA3A3F /* PlayingWithFileSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayingWithFileSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		460FBFCC1D4CB16C00DA3A3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = PlayingWithFileSystem/AppDelegate.swift; sourceTree = "<group>"; };
-		460FBFCE1D4CB16C00DA3A3F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = PlayingWithFileSystem/ViewController.swift; sourceTree = "<group>"; };
 		460FBFD11D4CB16C00DA3A3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		460FBFD31D4CB16C00DA3A3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		460FBFD61D4CB16C00DA3A3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -112,10 +110,6 @@
 		460FBFC01D4CB16B00DA3A3F = {
 			isa = PBXGroup;
 			children = (
-				46F4D44B1D578C2A0097AAA0 /* DropboxFile+CoreDataProperties.swift */,
-				46F4D44C1D578C2A0097AAA0 /* DropboxFile.swift */,
-				46F4D44D1D578C2A0097AAA0 /* File+CoreDataProperties.swift */,
-				46F4D44E1D578C2A0097AAA0 /* File.swift */,
 				460FBFCB1D4CB16B00DA3A3F /* PlayingWithFileSystem */,
 				460FBFE01D4CB16C00DA3A3F /* PlayingWithFileSystemTests */,
 				460FBFEB1D4CB16C00DA3A3F /* PlayingWithFileSystemUITests */,
@@ -137,13 +131,12 @@
 			isa = PBXGroup;
 			children = (
 				460FBFD01D4CB16C00DA3A3F /* Main.storyboard */,
-				466A3B061D4FFCCE00C60EF6 /* CustomTableViewCell.swift */,
 				460FBFD31D4CB16C00DA3A3F /* Assets.xcassets */,
 				460FBFD51D4CB16C00DA3A3F /* LaunchScreen.storyboard */,
 				460FBFD81D4CB16C00DA3A3F /* Info.plist */,
-				4613244B1D5657C4006087B2 /* Controller */,
 				4613244C1D5657E6006087B2 /* Model */,
-				46F4D4531D57A8490097AAA0 /* Custom1TableViewCell.swift */,
+				46C428AC1D5A373800DDAA45 /* View */,
+				4613244B1D5657C4006087B2 /* Controller */,
 			);
 			path = PlayingWithFileSystem;
 			sourceTree = "<group>";
@@ -173,7 +166,6 @@
 				460FBFFA1D4DF53100DA3A3F /* FileViewController.swift */,
 				46FB79291D4E7BDE00AD21EF /* DocumentsViewController.swift */,
 				466A3B0D1D51FF7B00C60EF6 /* newFileViewController.swift */,
-				460FBFCE1D4CB16C00DA3A3F /* ViewController.swift */,
 				46F4D4391D572E6A0097AAA0 /* Dropbox1ViewController.swift */,
 				46F4D4371D5717380097AAA0 /* DropboxAuthenticateViewController.swift */,
 			);
@@ -184,9 +176,13 @@
 		4613244C1D5657E6006087B2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				46F4D44B1D578C2A0097AAA0 /* DropboxFile+CoreDataProperties.swift */,
+				46F4D44C1D578C2A0097AAA0 /* DropboxFile.swift */,
+				46F4D44D1D578C2A0097AAA0 /* File+CoreDataProperties.swift */,
+				46F4D44E1D578C2A0097AAA0 /* File.swift */,
 				466A3B021D4FA0E100C60EF6 /* CoreDataStack.swift */,
-				46FB792B1D4E8F5C00AD21EF /* Model.xcdatamodeld */,
 				4613244D1D56EC67006087B2 /* Dropbox */,
+				46FB792B1D4E8F5C00AD21EF /* Model.xcdatamodeld */,
 			);
 			name = Model;
 			path = ..;
@@ -200,6 +196,15 @@
 				46F4D43D1D5733030097AAA0 /* Constants.swift */,
 			);
 			name = Dropbox;
+			sourceTree = "<group>";
+		};
+		46C428AC1D5A373800DDAA45 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				466A3B061D4FFCCE00C60EF6 /* CustomTableViewCell.swift */,
+				46F4D4531D57A8490097AAA0 /* Custom1TableViewCell.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,7 +347,6 @@
 				46FB792A1D4E7BDE00AD21EF /* DocumentsViewController.swift in Sources */,
 				46FB792D1D4E8F5C00AD21EF /* Model.xcdatamodeld in Sources */,
 				46F4D43C1D5732F90097AAA0 /* Client.swift in Sources */,
-				460FBFCF1D4CB16C00DA3A3F /* ViewController.swift in Sources */,
 				46F4D44F1D578C2A0097AAA0 /* DropboxFile+CoreDataProperties.swift in Sources */,
 				460FBFCD1D4CB16C00DA3A3F /* AppDelegate.swift in Sources */,
 				46F4D4521D578C2A0097AAA0 /* File.swift in Sources */,
