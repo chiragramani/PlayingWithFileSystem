@@ -142,19 +142,19 @@ class Dropbox1ViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if let indexPath = newIndexPath {
                 tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
-            break;
+            break
         case .Delete:
             if let indexPath = indexPath {
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
-            break;
+            break
         case .Update:
             if let indexPath = indexPath {
                 tableView.cellForRowAtIndexPath(indexPath)
             }
-            break;
+            break
         default:
-            break;
+            break
         }
     }
     func performFetch()

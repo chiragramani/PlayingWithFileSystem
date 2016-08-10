@@ -364,7 +364,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" paginationMode="topToBottom" translatesAutoresizingMaskIntoConstraints="NO" id="9Lu-ar-Uxv">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="71" width="600" height="529"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
                             </webView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LaA-WZ-9qq">
@@ -374,15 +374,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="9Lu-ar-Uxv" firstAttribute="leading" secondItem="nFb-sz-rqP" secondAttribute="leadingMargin" constant="-20" id="LIC-fO-qkc"/>
-                            <constraint firstItem="Ko0-AH-QTz" firstAttribute="top" secondItem="9Lu-ar-Uxv" secondAttribute="bottom" id="LNK-V4-xaz"/>
+                            <constraint firstItem="9Lu-ar-Uxv" firstAttribute="leading" secondItem="nFb-sz-rqP" secondAttribute="leadingMargin" constant="-20" id="8vG-4v-IRx"/>
+                            <constraint firstItem="9Lu-ar-Uxv" firstAttribute="top" secondItem="udB-RL-iEq" secondAttribute="bottom" constant="51" id="Exa-0J-dsC"/>
+                            <constraint firstItem="Ko0-AH-QTz" firstAttribute="top" secondItem="9Lu-ar-Uxv" secondAttribute="bottom" id="GhR-bS-jYI"/>
                             <constraint firstItem="LaA-WZ-9qq" firstAttribute="centerY" secondItem="nFb-sz-rqP" secondAttribute="centerY" id="VTd-4o-E1H"/>
-                            <constraint firstItem="9Lu-ar-Uxv" firstAttribute="top" secondItem="udB-RL-iEq" secondAttribute="bottom" constant="-20" id="pyf-rJ-2Su"/>
                             <constraint firstItem="LaA-WZ-9qq" firstAttribute="centerX" secondItem="nFb-sz-rqP" secondAttribute="centerX" id="qyN-3H-LKz"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="9Lu-ar-Uxv" secondAttribute="trailing" constant="-20" id="yTk-Xn-goc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9Lu-ar-Uxv" secondAttribute="trailing" constant="-20" id="v2L-oh-dtQ"/>
                         </constraints>
                     </view>
-                    <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityView" destination="LaA-WZ-9qq" id="Buq-g4-WzC"/>

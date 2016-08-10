@@ -23,6 +23,8 @@ class FileViewController: UIViewController,UIWebViewDelegate {
         configureActivityView(false)
         loadWebView()
         webView.delegate=self
+        webView.backgroundColor=UIColor.clearColor()
+        webView.opaque=false
         self.tabBarController?.tabBar.hidden=true
         self.navigationItem.rightBarButtonItem=UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(FileViewController.shareFile))
         
