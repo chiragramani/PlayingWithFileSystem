@@ -309,7 +309,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxJ-hT-eID" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1848" y="-928"/>
+            <point key="canvasLocation" x="2052" y="-701"/>
         </scene>
         <!--File View Controller-->
         <scene sceneID="Mse-k7-FPi">
